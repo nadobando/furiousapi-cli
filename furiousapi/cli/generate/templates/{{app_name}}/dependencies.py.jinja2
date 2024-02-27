@@ -1,0 +1,17 @@
+from fastapi.params import Depends
+
+from .repository import {{ app_name | pluralize }}Repository
+{% if  source == 'sql'-%}
+{% set session = "sql_session" -%}
+from ..dependencies import {{ session }}
+{% else -%}
+{% set session = "motor_session" -%}
+from dependencies import {{ session }}
+{% endif %}
+
+
+def repository(session={{ session }}) -> Depends:
+    def dep() -> {{ app_name | pluralize}}Repository:
+        return {{ app_name | pluralize }}Repository(session)
+
+    return Depends(dep)

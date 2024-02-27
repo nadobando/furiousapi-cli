@@ -1,0 +1,174 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.plugins]
+
+
+[tool.poetry]
+name = "furiousapi-cli"
+version = "0.1.0"
+description = ""
+authors = ["nadobando <7695172+nadobando@users.noreply.github.com>"]
+#readme = "README.md"
+packages = [
+    { include = "furiousapi" },
+]
+
+
+[tool.poetry.dependencies]
+# core
+python = "^3.9.5"
+pydantic = "^1.10.13"
+furiousapi-core = { path = "../core" }
+
+# cli
+typer = { extras = ["all"], version = "^0.9.0", optional = true }
+jinja2 = { version = "^3.1.2", optional = true }
+inflect = { version = "^6.0.2", optional = true }
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.2"
+pytest-cov = "^4.0.0"
+pre-commit = "^3.0.1"
+coverage = "^7.1.0"
+mypy = "^0.991"
+
+
+[tool.poetry.scripts]
+furious = "furiousapi.cli:app"
+
+[tool.coverage.run]
+branch = true
+include = [
+    "*/furiousapi/*",
+]
+
+
+[tool.coverage.report]
+exclude_lines = [
+    "if TYPE_CHECKING:",
+    "if __name__ == .__main__.:"
+]
+
+
+[tool.autopep8]
+max_line_length = 120
+#ignore = "E501,W6"  # or ["E501", "W6"]
+in-place = true
+recursive = true
+aggressive = 3
+
+[tool.black]
+line-length = 120
+target-version = ['py39']
+include = '\.pyi?$'
+preview = true
+exclude = """
+(
+  /(
+      .eggs         # exclude a few common directories in the
+    | .git          # root of the project
+    | .hg
+    | .mypy_cache
+    | .tox
+    | .venv
+    | venv
+    | _build
+    | buck-out
+    | build
+    | dist
+  )/
+)
+"""
+
+[tool.isort]
+profile = "black"
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+testpaths = [
+    "tests",
+]
+
+[tool.bandit.assert_used]
+skips = ['**/test_*.py', '**/test_*.py']
+
+[tool.poe.tasks]
+setup-pre-commit = "pre-commit install --install-hooks --hook-type prepare-commit-msg --hook-type pre-commit"
+
+[tool.mypy]
+check_untyped_defs = true
+#strict = true
+plugins = "pydantic.mypy"
+ignore_missing_imports = true
+mypy_path = "furiousapi"
+exclude = [
+    '.venv/**/*.py'
+]
+disable_error_code = "no-redef"
+#enable_recursive_aliases = true
+[tool.pydantic-mypy]
+init_forbid_extra = true
+init_typed = true
+warn_required_dynamic_aliases = true
+warn_untyped_fields = true
+
+[tool.ruff]
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".hg",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "venv",
+]
+line-length = 120
+select = ["ALL"]
+ignore = [
+    "D",
+    "ANN101",
+    "A003",
+    "B008",
+    "B905",
+    "COM",
+    "PLR0913",
+    "ANN003",
+    "ANN002",
+    "EM101",
+    "TRY003",
+    "ANN102",
+    "UP035",
+    "G004",
+    "EM102",
+    "I001",
+    "ANN401"
+]
+[tool.ruff.per-file-ignores]
+"tests/*" = ["ANN201", "S101", "DTZ001", "PLR0913"]
+"furiousapi/db/mongo/models.py" = ["N804"]
+"furiousapi/db/core/metaclasses.py" = ["N804"]
+"furiousapi/db/core/fields.py" = ["N805"]
+"furiousapi/core/controllers/base.py" = ["N804"]
+"furiousapi/api/controllers/base.py" = ["N804"]
+"furiousapi/api/controllers/mixins.py" = ["N805"]
+[tool.ruff.flake8-annotations]
+mypy-init-return = true
+[tool.ruff.flake8-unused-arguments]
+ignore-variadic-names = true
+[tool.ruff.pyupgrade]
+keep-runtime-typing = true

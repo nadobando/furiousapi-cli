@@ -1,0 +1,12 @@
+{% if source == "sql" %}
+{% set model = "SQLModel" %}
+{% set repository = "BaseSQLRepository" %}
+{% else -%}
+{% set repository = "BaseMongoRepository" %}
+{% endif -%}
+
+from .models import {{ app_name }}Model
+
+
+class {{ app_name | pluralize }}Repository({{ repository }}[{{ app_name }}Model]):
+    ...

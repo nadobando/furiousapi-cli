@@ -1,0 +1,22 @@
+{% if source == 'sql' -%}
+from typing import Optional
+    {% set model = 'SQLModel' -%}
+    {% set metakwargs="table=True" %}
+from sqlmodel import SQLModel, Field
+{% else -%}
+    {% set model = 'Document' -%}
+    {% set metakwargs="" -%}
+from beanie import Document
+{% endif %}
+
+
+{% if metakwargs %}
+class {{ app_name }}Model({{ model }}, {{ metakwargs}}):
+{% else %}
+class {{ app_name }}Model({{ model }}):
+{% endif %}
+{% if source == "sql" %}
+    id: Optional[int] = Field(default=None, primary_key=True)
+{% else %}
+    ...
+{% endif %}

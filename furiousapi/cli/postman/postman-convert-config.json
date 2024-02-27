@@ -1,0 +1,21 @@
+{
+  "requestNameSource": "Fallback",
+  "indentCharacter": "Tab",
+  "collapseFolders": true,
+  "optimizeConversion": true,
+  "requestParametersResolution": "Example",
+  "exampleParametersResolution": "Example",
+  "folderStrategy": "Paths",
+  "schemaFaker": true,
+  "stackLimit": 10,
+  "includeAuthInfoInExample": true,
+  "shortValidationErrors": false,
+  "validationPropertiesToIgnore": [],
+  "showMissingInSchemaErrors": true,
+  "detailedBlobValidation": false,
+  "suggestAvailableFixes": false,
+  "validateMetadata": false,
+  "ignoreUnresolvedVariables": false,
+  "strictRequestMatching": false,
+  "disableOptionalParameters": true
+}

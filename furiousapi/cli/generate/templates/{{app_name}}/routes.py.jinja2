@@ -1,0 +1,8 @@
+from furiousapi.api.controllers import ModelController
+
+from .dependencies import repository
+
+
+class {{ app_name | pluralize }}ModelController(ModelController, prefix="/{{ app_name | lower }}", tags=["{{ app_name | title | pluralize }}"]):
+    repository = repository()
+

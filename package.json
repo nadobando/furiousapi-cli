@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@apideck/portman": "^1.22.0",
+    "portman": "^0.0.3"
+  }
+}
